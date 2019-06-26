@@ -3,7 +3,8 @@
 <% } %>
 <% if (schema.items!==undefined) { %>
 <% if (!(schema.items!==undefined&&schema.items.type==="array")) { %>
-All items must be of the type:<% }
+All items must be of the type:
+<% }
 if (schema.items.type==="string") { 
   %><%- include("string-type",{schema:schema.items,_:_}) 
   %><% } else if (schema.items.type==="number"||schema.items.type==="integer") { 

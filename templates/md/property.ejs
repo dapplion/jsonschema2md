@@ -64,7 +64,7 @@ The value of this property **must** be equal to one of the known values below.
 | Value | Description |
 |-------|-------------|
 <%  _.forIn(schema["meta:enum"], (value, key, object) => { %>
-| `<%= key %>` | <%= value %> |
+| `<%= key %>` | <%= (schema["enumDescriptions"] || {})[key] || "" %> |
 <% }); %>
 
 <% } %><% } %>

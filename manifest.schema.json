@@ -46,14 +46,25 @@
     "type": {
       "type": "string",
       "description": "Type of the DNP. Must be one these types",
+      "default": "service",
       "examples": ["service", "dncore"],
-      "enum": ["service", "library", "dncore"]
+      "enum": ["service", "library", "dncore"],
+      "enumDescriptions": {
+        "service": "Can have ENVs a depend on library DNPs.", 
+        "library": "Should not have ENVs and cannot depend on service DNPs.", 
+        "dncore": "DNPs that are part of the DAppNode core and have special permissions."
+      }
     },
     "chain": {
       "type": "string",
       "description": "Indicate that this DNP is a blockchain node so the Admin UI shows its syncing status",
       "examples": ["ethereum", "bitcoin", "monero"],
-      "enum": ["ethereum", "bitcoin", "monero"]
+      "enum": ["ethereum", "bitcoin"],
+      "enumDescriptions": {
+        "ethereum": "DNP must have an Ethereum JSON RPC exposed internally at port 8545", 
+        "bitcoin": "DNP must have a standard Bitcoin JSON API exposed at the default port (8332). Uses the npm package `bitcoin-core`", 
+        "monero": "DNP must have a Monero API exposed internally at port 18081. Uses the npm package `monero-rpc`"
+      }
     },
     "image": {
       "type": "object",
@@ -163,8 +174,15 @@
         "restart": {
           "type": "string",
           "description": "Docker restart policy, 'always' is highly recommended. See https://docs.docker.com/compose/compose-file/#restart",
+          "default": "always",
           "examples": ["always"],
-          "enum": ["no", "always", "on-failure", "unless-stopped"]
+          "enum": ["always", "no", "on-failure", "unless-stopped"],
+          "enumDescriptions": {
+            "always": "DNP always restarts", 
+            "no": "DNP does not restart under any circumstance", 
+            "on-failure": "DNP restarts if the exit code indicates an on-failure error",
+            "unless-stopped": "DNP restarts unless Docker itself is stopped or restarted"
+          }
         },
         "subnet": {
           "type": "string",
