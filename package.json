@@ -7,7 +7,7 @@
     "jsonschema2md": "./cli.js"
   },
   "scripts": {
-    "dev": "node cli.js -d manifest.schema.json .",
+    "dev": "node cli.js -d manifest.schema.json -x - && mv out/manifest.schema.md manifest-reference.md",
     "semantic-release": "semantic-release",
     "commit": "git-cz",
     "lint": "eslint .",
