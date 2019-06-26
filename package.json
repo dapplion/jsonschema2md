@@ -7,6 +7,7 @@
     "jsonschema2md": "./cli.js"
   },
   "scripts": {
+    "dev": "node cli.js -d manifest.schema.json .",
     "semantic-release": "semantic-release",
     "commit": "git-cz",
     "lint": "eslint .",

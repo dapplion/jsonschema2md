@@ -2,7 +2,7 @@
 
 <%- include("nested-properties",{outer:schema,props: schema.properties,_:_, nested:true}) %>
 
-<% _.keys(schema.properties).sort().forEach(property => {
+<% _.keys(schema.properties).forEach(property => {
   const inner = schema.properties[property];
   simpletype(inner)
   const required = (Array.isArray(schema.required)&&schema.required.indexOf(property)>=0); %>

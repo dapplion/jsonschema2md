@@ -14,7 +14,7 @@
     "image",
     "license"
   ],
-  "description": "The DAppNode package (DNP) defines all the necessary information for a DAppNode to understand this DNP:\n - IPFS of BZZ hashes to download the DNP docker image \n - Docker related data to configure and run its container \n - Metadata to be shown in the Admin UI",
+  "description": "The DAppNode package (DNP) defines all the necessary information for a DAppNode to understand this DNP:\n - IPFS of BZZ hashes to download the DNP docker image \n - Docker related data to configure and run its container \n - Metadata to be control how the DNP shown in the Admin UI",
   "properties": {
     "name": {
       "type": "string",
@@ -157,7 +157,8 @@
         },
         "privileged": {
           "type": "boolean",
-          "description": "Grant the DNP (almost) all the capabilities of their host machine, regarding kernel features and device access. See https://blog.docker.com/2013/09/docker-can-now-run-within-docker/"
+          "description": "Grant the DNP (almost) all the capabilities of their host machine, regarding kernel features and device access. See https://blog.docker.com/2013/09/docker-can-now-run-within-docker/",
+          "examples": [true]
         },
         "restart": {
           "type": "string",
@@ -325,6 +326,50 @@
         }
       }
     },
+    "disclaimer": {
+      "type": "object",
+      "description": "Disclaimer to be shown to the user on install, and will require the user to approve it",
+      "required": ["message"],
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Message shown in the pop-up. Markdown and links are allowed",
+          "examples": [
+            "This software is experimental, presented “as is” and inherently carries risks."
+          ]
+        }
+      }
+    },
+    "style": {
+      "type": "object",
+      "description": "Graphic information to control the appearance of DNP related items in the ADMIN UI",
+      "properties": {
+        "featuredBackground": {
+          "type": "string",
+          "description": "CSS background property to be applied to the DNP card in the DNP store if featured. See https://developer.mozilla.org/docs/Web/CSS/background for valid values",
+          "examples": [
+            "linear-gradient(to right, #323131, #395353)",
+            "black"
+          ]
+        },
+        "featuredColor": {
+          "type": "string",
+          "description": "CSS color property to be applied to the DNP card in the DNP store if featured. See https://developer.mozilla.org/docs/Web/CSS/color for valid values",
+          "examples": [
+            "white",
+            "#fff"
+          ]
+        },
+        "featuredAvatarFilter": {
+          "type": "string",
+          "description": "CSS filter property to be applied to `<img>` component (avatar) of the DNP card in the DNP store if featured. See https://developer.mozilla.org/docs/Web/CSS/filter for valid values",
+          "examples": [
+            "invert(1)",
+            "grayscale(80%);"
+          ]
+        }
+      }
+    },
     "author": {
       "type": "string",
       "description": "Main author of this DNP. Must follow the structure `${name} <${email}> (${githubUserLink})`",
@@ -418,19 +463,6 @@
         "url": {
           "type": "string",
           "examples": ["https://github.com/dappnode/DNP_IPFS/issues"]
-        }
-      }
-    },
-    "disclaimer": {
-      "type": "object",
-      "description": "Disclaimer to be shown to the user on install, and will require the user to approve it",
-      "required": ["message"],
-      "properties": {
-        "message": {
-          "type": "string",
-          "examples": [
-            "This software is experimental, presented “as is” and inherently carries risks."
-          ]
         }
       }
     },
