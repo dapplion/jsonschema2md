@@ -8,45 +8,19 @@
 ## <%=name %>
 
 <% if (schema.title) { %>
-### <%= schema.title %>
-
+<%= schema.title %>
 <% } %>
 
 <% if (schema.description) { %>
 <%- schema.description.replace(/\n/g, '\n\n') %>
 <% } %>
 
-`<%=name %>`
-
 
 * is <% if (required) { %>**required**<% } else { %>optional<% } %>
-* type: <%=schema.simpletype %><% if (schema.simpletype.match(/\[\]\[\]/)||schema.simpletype==="`array[]`") { %> (nested array)<% } %>
-<% if (schema.type==='array') { %><% if (schema.maxItems!==undefined&&schema.minItems!==undefined) { %>
-* between `<%=schema.minItems %>` and `<%=schema.maxItems %>` items in the array
-<% } else if (schema.maxItems!==undefined) { %>
-* no more than `<%=schema.maxItems %>` items in the array
-<% } else if (schema.minItems!==undefined) { %>
-* at least `<%=schema.minItems %>` items in the array<% } %>
-<% } -%>
 <% if (schema.default!==undefined) { %>
 * default: `<%- JSON.stringify(schema.default) %>`
-<% } -%>
-* defined in <% if (schema.$oSchema) { %>[<%= schema.$oSchema.$linkVal %>](<%= schema.$oSchema.$linkPath %>#<%= nameSlug %>)<% } else { %>this schema<% } %>
-
-<% if (schema.const!==undefined) { %>
-The value of this property **must** be equal to:
-
-
-```json
-<%- JSON.stringify(schema.const, null, 2) %>
-```
-
-<% } else if (schema.enum!==undefined) { %>
-The value of this property **must** be equal to one of the [known values below](#<%=nameSlug %>-known-values).
-<% } else { %>
-
-### <%=name %> Type
-
+<% } %>
+* type:
 <% if (schema.type==="string") { %>
 <%- include("string-type",{schema:schema,_:_}) %>
 <% } else if (schema.type==="number"||schema.type==="integer") { %>
@@ -73,35 +47,50 @@ Unknown type `<%= schema.type %>`.
 <%- JSON.stringify(schema, null, 2) %>
 ```
 
-<% }} %>
+<% } %>
+
+<% if (schema.const!==undefined) { %>
+The value of this property **must** be equal to:
+
+
+```json
+<%- JSON.stringify(schema.const, null, 2) %>
+```
+
+<% } else if (schema.enum!==undefined) { %>
+The value of this property **must** be equal to one of the known values below.
 
 <% if (schema.enum!==undefined||schema["meta:enum"]!==undefined) { %>
-### <%=name %> Known Values
-
 | Value | Description |
 |-------|-------------|
 <%  _.forIn(schema["meta:enum"], (value, key, object) => { %>
 | `<%= key %>` | <%= value %> |
 <% }); %>
 
+<% } %><% } %>
+
+<% if (examples && examples.length) { %>
+<% if (examples.length == 1) { %>
+Example:
+<% } else { %>
+Examples:
 <% } %>
 
-
-<% if (examples && examples.length == 1) { %>
-### <%=name %> Example
-
-
-```json
-<%- examples[0] %>
-```
-<% } else if (examples && examples.length > 1) { %>
-### <%=name %> Examples
 <%  _.forEach(examples, example => { %>
-
+<% if (typeof example === "object") { %>
 ```json
+<%-  JSON.stringify(example, null, 2) %>
+```
+<% } else if (typeof example === "string") { %>
+```json
+<%- example.includes('"') ? example : JSON.stringify(example, null, 2) %>
+```
+<% } else { %>
+```
 <%- example %>
 ```
-
-<% }); %>
 <% } %>
 
+<% }); %>
+
+<% } %>
