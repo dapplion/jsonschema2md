@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "node cli.js -d manifest.schema.json -x - && mv out/manifest.schema.md manifest-reference.md",
+    "tag-and-publish": "npm version patch && git push origin master && git push --tags",
     "semantic-release": "semantic-release",
     "commit": "git-cz",
     "lint": "eslint .",

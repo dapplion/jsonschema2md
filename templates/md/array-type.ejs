@@ -35,4 +35,18 @@ Unknown type `<%= schema.items.type %>`.
 
 <% } %>
 
+
+<% if (schema.items.enum!==undefined) { %>
+The value of this property **must** be equal to one of the known values below.
+
+<% if (schema.items.enum!==undefined||schema.items["meta:enum"]!==undefined) { %>
+| Value | Description |
+|-------|-------------|
+<%  _.forIn(schema.items["meta:enum"], (value, key, object) => { %>
+| `<%= key %>` | <%= (schema.items["enumDescriptions"] || {})[key] || "" %> |
+<% }); %>
+
+<% } %><% } %>
+
+
 <% } %>
