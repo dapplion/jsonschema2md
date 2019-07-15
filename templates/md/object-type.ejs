@@ -1,4 +1,4 @@
-`object`<%=schema.nullable ? ", nullable," : "" %> with following properties:
+`object`<%=schema.nullable ? ", nullable," : "" %> with the following properties:
 
 <%- include("nested-properties",{outer:schema,props: schema.properties,_:_, nested:true}) %>
 
